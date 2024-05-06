@@ -1,13 +1,8 @@
 package Payload;
 
-import com.bezkoder.spring.datajpa.model.Product;
-import com.bezkoder.spring.datajpa.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.justbuy.model.Product;
+import com.justbuy.model.User;
 import lombok.Data;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Data
 public class OrderDto {
