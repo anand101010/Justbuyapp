@@ -21,4 +21,8 @@ public class Product {
     @Column(name="product_name")
     private  String product_name;
 
+    @Lob
+    @Column(name ="product_image")
+    private byte[] product_image;
+
 }

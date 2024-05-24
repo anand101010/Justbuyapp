@@ -1,5 +1,6 @@
 package com.justbuy.controller;
 
+import com.justbuy.DTO.OrderDto;
 import com.justbuy.Service.OrderService;
 import com.justbuy.model.Orders;
 import io.swagger.annotations.Api;
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.justbuy.DTO.OrderDto;
 
 import java.util.List;
 
@@ -21,10 +23,27 @@ public class OrderController {
     }
 @ApiOperation("Save  Orders")
     @PostMapping("/postorder")
-    public ResponseEntity<Orders> saveOrder(@RequestBody Orders orders) {
-        return new ResponseEntity<Orders>(orderService.saveOrders(orders), HttpStatus.ACCEPTED);
+    public ResponseEntity<?> saveOrder(@RequestBody OrderDto orderDto) {
+        try{
+            Orders order=mapDtoToEntity(orderDto);
+            Orders saveOrder=orderService.saveOrders(order)
+return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST)
+        }
+
     }
-@ApiOperation("Get all orders")
+
+    private Orders mapDtoToEntity(OrderDto orderDto) {
+        Orders order=new Orders();
+        order.setOrder_price(orderDto.getOrder_price());
+        order.setOrder_id(orderDto.getOrder_id());
+        order.setOrder_address(orderDto.getOrder_address());
+        order.setOrder_status(orderDto.getOrder_status());
+        order.setUser(orderDto.getUser());
+    }
+
+    @ApiOperation("Get all orders")
     @GetMapping("/getallorder")
     public List<Orders> getAll() {
         return  orderService.GetAllOrders();
